@@ -7,25 +7,29 @@
           <form>
             <div class="form-group">
               <label for="signup-name" class="sr-only">Name</label>
-              <input type="text" class="form-control input-lg" id="signup-name" placeholder="Name">
+              <input type="text" class="form-control input-lg" id="signup-name"
+               placeholder="Name" name="name">
             </div>
             <div class="form-group">
               <label for="signup-username" class="sr-only">Username*</label>
               <input type="text" class="form-control input-lg"
-               id="signup-username" placeholder="Username*" required>
+               id="signup-username" placeholder="Username*" required name="username">
             </div>
             <div class="form-group">
               <label for="signup-email" class="sr-only">Email*</label>
               <input type="email" class="form-control input-lg"
-               id="signup-email" placeholder="Email*" required>
+               id="signup-email" placeholder="Email*" required name="email">
             </div>
             <div class="form-group">
               <label for="signup-password" class="sr-only">Password*</label>
               <input type="password" class="form-control input-lg"
-               id="signup-password" placeholder="Password*" required>
+               id="signup-password" placeholder="Password*" required name="password">
             </div>
             <button type="submit" class="btn btn-default btn-lg btn-block">
               <i class="fas fa-sign-in-alt"></i> Sign Up</button>
+            <div class="text-center">
+              <a href="/#/login" class="btn btn-default btn-sm">Log In</a>
+            </div>
           </form>
         </div>
       </div>
