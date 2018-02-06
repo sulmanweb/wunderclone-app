@@ -68,6 +68,10 @@ export default {
               },
             },
           });
+          // Emit event of logged in user
+          this.$bus.$emit('logged', 'User logged in');
+          // Redirect to home component
+          this.$router.push({ name: 'Home' });
         })
         .catch(e => {
           this.errors = e.response.data.errors;
