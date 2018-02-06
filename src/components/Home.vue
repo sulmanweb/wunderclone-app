@@ -113,6 +113,7 @@ export default {
                 },
               },
             });
+            this.lists = response.data;
           } else {
             this.lists = response.data;
           }
