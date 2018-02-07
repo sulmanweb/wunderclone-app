@@ -5,6 +5,7 @@ import Login from '@/components/Login';
 import Home from '@/components/Home';
 import ListView from '@/components/ListView';
 import Toasted from 'vue-toasted';
+import VueSwal from 'vue-swal';
 
 Vue.use(Router);
 Vue.use(Toasted, {
@@ -13,6 +14,7 @@ Vue.use(Toasted, {
   duration: 5000,
   iconPack: 'fontawesome',
 });
+Vue.use(VueSwal);
 
 export default new Router({
   mode: 'history',

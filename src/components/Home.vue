@@ -24,8 +24,7 @@
         </form>
         <!-- List index -->
         <div class="list-group">
-          <router-link class="list-group-item" v-for="list in lists" :key="list"
-           @dblclick.prevent="editList(list)" :to="{ name: 'ListView', params: { id: list.id }}">
+          <a class="list-group-item" v-for="list in lists" :key="list">
            <div v-show="list === edit_list">
              <div class="row">
                <div class="col-xs-11">
@@ -36,10 +35,12 @@
                <div class="col-xs-1"><a @click.prevent="escapeUpdateList"><i class="fas fa-times-circle"></i></a></div>
              </div>
              </div>
+             <router-link :to="{ name: 'ListView', params: { id: list.id }}">
             <div v-show="list !== edit_list">{{ list.name }} <span class="pull-right">
               <a @click.prevent="editList(list)"> <i class="fas fa-edit"></i> </a> 
               <a @click.prevent="destroyList(list)"> <i class="fas fa-trash"></i></a></span></div>
-          </router-link>
+             </router-link>
+          </a>
         </div>
       </div>
     </div>
@@ -162,31 +163,39 @@ export default {
     },
     escapeUpdateList() {
       this.edit_list = {};
+      this.getLists();
     },
     destroyList(list) {
-      let ask = confirm('Are you sure you want to delete list?');
-      if (ask === true) {
-        const headers = { headers: {} };
-        const session = JSON.parse(localStorage.getItem('session'));
-        headers.headers.sid = session.sid;
-        headers.headers.utoken = session.utoken;
-        HTTP.delete('/lists/' + list.id.toString(), headers)
-          .then(response => {
-            // show success toast
-            this.$toasted.show('List has been deleted successfully', {
-              icon: 'check-circle',
-              action: {
-                text: 'CLOSE',
-                onClick: (e, toastObject) => {
-                  toastObject.goAway(0);
+      this.$swal({
+        title: 'Are you sure?',
+        text: 'Are you sure you want to delete list?',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then(willDelete => {
+        if (willDelete) {
+          const headers = { headers: {} };
+          const session = JSON.parse(localStorage.getItem('session'));
+          headers.headers.sid = session.sid;
+          headers.headers.utoken = session.utoken;
+          HTTP.delete('/lists/' + list.id.toString(), headers)
+            .then(response => {
+              // show success toast
+              this.$toasted.show('List has been deleted successfully', {
+                icon: 'check-circle',
+                action: {
+                  text: 'CLOSE',
+                  onClick: (e, toastObject) => {
+                    toastObject.goAway(0);
+                  },
                 },
-              },
-            });
-            // Get latest list of lists
-            this.$bus.$emit('new-list-created');
-          })
-          .catch({});
-      }
+              });
+              // Get latest list of lists
+              this.$bus.$emit('new-list-created');
+            })
+            .catch({});
+        }
+      });
     },
   },
   mounted() {
