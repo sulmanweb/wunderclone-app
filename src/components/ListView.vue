@@ -191,34 +191,45 @@ export default {
     },
     escapeUpdateTodo() {
       this.edit_todo = {};
+      this.getTodos();
     },
     destroyTodo(todo) {
-      let ask = confirm('Are you sure you want to delete todo?');
-      if (ask === true) {
-        const headers = { headers: {} };
-        const session = JSON.parse(localStorage.getItem('session'));
-        headers.headers.sid = session.sid;
-        headers.headers.utoken = session.utoken;
-        HTTP.delete(
-          '/lists/' + this.list_id.toString() + '/tasks/' + todo.id.toString(),
-          headers
-        )
-          .then(response => {
-            // show success toast
-            this.$toasted.show('Todo has been deleted successfully', {
-              icon: 'check-circle',
-              action: {
-                text: 'CLOSE',
-                onClick: (e, toastObject) => {
-                  toastObject.goAway(0);
+      this.$swal({
+        title: 'Are you sure?',
+        text: 'Are you sure you want to delete todo?',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true,
+      }).then(willDelete => {
+        if (willDelete) {
+          const headers = { headers: {} };
+          const session = JSON.parse(localStorage.getItem('session'));
+          headers.headers.sid = session.sid;
+          headers.headers.utoken = session.utoken;
+          HTTP.delete(
+            '/lists/' +
+              this.list_id.toString() +
+              '/tasks/' +
+              todo.id.toString(),
+            headers
+          )
+            .then(response => {
+              // show success toast
+              this.$toasted.show('Todo has been deleted successfully', {
+                icon: 'check-circle',
+                action: {
+                  text: 'CLOSE',
+                  onClick: (e, toastObject) => {
+                    toastObject.goAway(0);
+                  },
                 },
-              },
-            });
-            // Get latest todo of todos
-            this.$bus.$emit('new-todo-created');
-          })
-          .catch({});
-      }
+              });
+              // Get latest todo of todos
+              this.$bus.$emit('new-todo-created');
+            })
+            .catch({});
+        }
+      });
     },
     updateStatusTodo(todo) {
       // update todo
