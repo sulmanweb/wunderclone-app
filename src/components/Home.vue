@@ -24,8 +24,8 @@
         </form>
         <!-- List index -->
         <div class="list-group">
-          <a class="list-group-item" v-for="list in lists" :key="list"
-           @dblclick.prevent="editList(list)">
+          <router-link class="list-group-item" v-for="list in lists" :key="list"
+           @dblclick.prevent="editList(list)" :to="{ name: 'ListView', params: { id: list.id }}">
            <div v-show="list === edit_list">
              <div class="row">
                <div class="col-xs-11">
@@ -39,7 +39,7 @@
             <div v-show="list !== edit_list">{{ list.name }} <span class="pull-right">
               <a @click.prevent="editList(list)"> <i class="fas fa-edit"></i> </a> 
               <a @click.prevent="destroyList(list)"> <i class="fas fa-trash"></i></a></span></div>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
