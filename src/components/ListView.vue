@@ -44,13 +44,13 @@
                <div class="col-xs-11">
                   <input type="text" class="input-lg form-control"
                   v-model="edit_todo.name" @keyup.enter="updateTodo(edit_todo)"
-                  @keyup.esc="escapeUpdateTodo" autofocus> 
+                  @keyup.esc="escapeUpdateTodo" autofocus>
                </div>
                <div class="col-xs-1"><a @click.prevent="escapeUpdateTodo"><i class="fas fa-times-circle"></i></a></div>
              </div>
              </div>
             <div v-show="todo !== edit_todo" :class="[todo.status === 'done' ? 'completed' : '']"><input type="checkbox" :checked="todo.status === 'done'" @click="updateStatusTodo(todo)"> {{ todo.name }} <span class="pull-right">
-              <a @click.prevent="editTodo(todo)"> <i class="fas fa-edit"></i> </a> 
+              <a @click.prevent="editTodo(todo)"> <i class="fas fa-edit"></i> </a>
               <a @click.prevent="destroyTodo(todo)"> <i class="fas fa-trash"></i></a></span></div>
           </a>
         </div>
@@ -81,10 +81,10 @@ export default {
       headers.headers.sid = session.sid;
       headers.headers.utoken = session.utoken;
       HTTP.get('/lists/' + this.list_id.toString() + '/tasks', headers)
-        .then(response => {
+        .then((response) => {
           this.todos = response.data;
         })
-        .catch(e => {
+        .catch((e) => {
           this.$router.push({ name: 'Home' });
         });
     },
@@ -94,14 +94,14 @@ export default {
       headers.headers.sid = session.sid;
       headers.headers.utoken = session.utoken;
       HTTP.get('/lists', headers)
-        .then(response => {
+        .then((response) => {
           if (response.data.length === 0) {
             this.lists = response.data;
           } else {
             this.lists = response.data;
           }
         })
-        .catch(e => {});
+        .catch((e) => {});
     },
     submitNewTodo() {
       const headers = { headers: {} };
@@ -111,9 +111,9 @@ export default {
       HTTP.post(
         '/lists/' + this.list_id.toString() + '/tasks',
         this.new_todo,
-        headers
+        headers,
       )
-        .then(response => {
+        .then((response) => {
           // show success toast
           this.$toasted.show('New todo created successfully', {
             icon: 'check-circle',
@@ -129,7 +129,7 @@ export default {
           // generate event new list created
           this.$bus.$emit('new-todo-created');
         })
-        .catch(e => {
+        .catch((e) => {
           // Show error toast
           this.$toasted.show(e.response.data.errors[0], {
             icon: 'exclamation-trianle',
@@ -158,9 +158,9 @@ export default {
           '/tasks/' +
           edit_todo.id.toString(),
         data,
-        headers
+        headers,
       )
-        .then(response => {
+        .then((response) => {
           // show success toast
           this.$toasted.show('Todo has been edited successfully', {
             icon: 'check-circle',
@@ -176,7 +176,7 @@ export default {
           // Get latest todo of todos
           this.$bus.$emit('new-todo-created');
         })
-        .catch(e => {
+        .catch((e) => {
           // Show error toast
           this.$toasted.show(e.response.data.errors[0], {
             icon: 'exclamation-trianle',
@@ -200,7 +200,7 @@ export default {
         icon: 'warning',
         buttons: true,
         dangerMode: true,
-      }).then(willDelete => {
+      }).then((willDelete) => {
         if (willDelete) {
           const headers = { headers: {} };
           const session = JSON.parse(localStorage.getItem('session'));
@@ -211,9 +211,9 @@ export default {
               this.list_id.toString() +
               '/tasks/' +
               todo.id.toString(),
-            headers
+            headers,
           )
-            .then(response => {
+            .then((response) => {
               // show success toast
               this.$toasted.show('Todo has been deleted successfully', {
                 icon: 'check-circle',
@@ -246,9 +246,9 @@ export default {
       HTTP.put(
         '/lists/' + this.list_id.toString() + '/tasks/' + todo.id.toString(),
         data,
-        headers
+        headers,
       )
-        .then(response => {
+        .then((response) => {
           // show success toast
           this.$toasted.show('Todo has been updated successfully', {
             icon: 'check-circle',
@@ -262,7 +262,7 @@ export default {
           // Get latest todo of todos
           this.$bus.$emit('new-todo-created');
         })
-        .catch(e => {
+        .catch((e) => {
           // Show error toast
           this.$toasted.show(e.response.data.errors[0], {
             icon: 'exclamation-trianle',

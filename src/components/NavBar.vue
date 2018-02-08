@@ -60,7 +60,7 @@ export default {
       headers.headers.sid = session.sid;
       headers.headers.utoken = session.utoken;
       HTTP.delete('/auth/sign_out', headers)
-        .then(response => {
+        .then((response) => {
           // remove local storage
           localStorage.removeItem('session');
           localStorage.removeItem('current_user');
@@ -79,7 +79,7 @@ export default {
           // redirect to login page
           this.$router.push({ name: 'Login' });
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
   },
   mounted() {
