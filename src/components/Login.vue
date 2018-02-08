@@ -6,25 +6,25 @@
           <h2 class="text-center">Log In</h2>
           <form>
             <div class="alert alert-danger" role="alert" v-for="error in errors"
-             :key="error">{{ error }}</div>
+            :key="error">{{ error }}</div>
             <div class="form-group">
               <label for="login-auth" class="sr-only">Username / Email*</label>
               <input type="text" class="form-control input-lg"
-               id="login-auth" placeholder="Username / Email*" required name="auth"
-               v-model="form_data.auth">
+              id="login-auth" placeholder="Username / Email*" required name="auth"
+              v-model="form_data.auth">
             </div>
             <div class="form-group">
               <label for="login-password" class="sr-only">Password*</label>
               <input type="password" class="form-control input-lg"
-               id="login-password" placeholder="Password*" required name="password"
-               v-model="form_data.password">
+              id="login-password" placeholder="Password*" required name="password"
+              v-model="form_data.password">
             </div>
             <button type="submit" class="btn btn-default btn-lg btn-block"
-             @click.prevent="submitLogin">
+            @click.prevent="submitLogin">
               <i class="fas fa-sign-in-alt"></i> Log In</button>
             <div class="text-center">
               <router-link class="btn btn-default btn-sm"
-               :to="{name: 'SignUp'}">Sign Up</router-link>
+              :to="{name: 'SignUp'}">Sign Up</router-link>
             </div>
           </form>
         </div>
@@ -48,15 +48,15 @@ export default {
   methods: {
     submitLogin() {
       HTTP.post('/auth/sign_in', this.form_data)
-        .then(response => {
+        .then((response) => {
           // Set localstorage with keys
           localStorage.setItem(
             'session',
-            JSON.stringify(response.data.session)
+            JSON.stringify(response.data.session),
           );
           localStorage.setItem(
             'current_user',
-            JSON.stringify(response.data.user)
+            JSON.stringify(response.data.user),
           );
           // Show toast for success
           this.$toasted.show('You are logged in successfully', {
@@ -73,7 +73,7 @@ export default {
           // Redirect to home component
           this.$router.push({ name: 'Home' });
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors = e.response.data.errors;
         });
     },

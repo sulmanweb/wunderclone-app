@@ -30,14 +30,14 @@
                <div class="col-xs-11">
                   <input type="text" class="input-lg form-control"
                   v-model="edit_list.name" @keyup.enter="updateList(edit_list)"
-                  @keyup.esc="escapeUpdateList" autofocus> 
+                  @keyup.esc="escapeUpdateList" autofocus>
                </div>
                <div class="col-xs-1"><a @click.prevent="escapeUpdateList"><i class="fas fa-times-circle"></i></a></div>
              </div>
              </div>
              <router-link :to="{ name: 'ListView', params: { id: list.id }}">
             <div v-show="list !== edit_list">{{ list.name }} <span class="pull-right">
-              <a @click.prevent="editList(list)"> <i class="fas fa-edit"></i> </a> 
+              <a @click.prevent="editList(list)"> <i class="fas fa-edit"></i> </a>
               <a @click.prevent="destroyList(list)"> <i class="fas fa-trash"></i></a></span></div>
              </router-link>
           </a>
@@ -67,7 +67,7 @@ export default {
       headers.headers.sid = session.sid;
       headers.headers.utoken = session.utoken;
       HTTP.post('/lists', this.new_list, headers)
-        .then(response => {
+        .then((response) => {
           // show success toast
           this.$toasted.show('New list created successfully', {
             icon: 'check-circle',
@@ -83,7 +83,7 @@ export default {
           // generate event new list created
           this.$bus.$emit('new-list-created');
         })
-        .catch(e => {
+        .catch((e) => {
           // Show error toast
           this.$toasted.show(e.response.data.errors[0], {
             icon: 'exclamation-trianle',
@@ -102,7 +102,7 @@ export default {
       headers.headers.sid = session.sid;
       headers.headers.utoken = session.utoken;
       HTTP.get('/lists', headers)
-        .then(response => {
+        .then((response) => {
           if (response.data.length === 0) {
             // Show empty toast
             this.$toasted.show("You don't have any lists for now", {
@@ -119,7 +119,7 @@ export default {
             this.lists = response.data;
           }
         })
-        .catch(e => {});
+        .catch((e) => {});
     },
     editList(list) {
       this.edit_list = list;
@@ -132,7 +132,7 @@ export default {
       headers.headers.sid = session.sid;
       headers.headers.utoken = session.utoken;
       HTTP.put('/lists/' + edit_list.id.toString(), data, headers)
-        .then(response => {
+        .then((response) => {
           // show success toast
           this.$toasted.show('List has been edited successfully', {
             icon: 'check-circle',
@@ -148,7 +148,7 @@ export default {
           // Get latest list of lists
           this.$bus.$emit('new-list-created');
         })
-        .catch(e => {
+        .catch((e) => {
           // Show error toast
           this.$toasted.show(e.response.data.errors[0], {
             icon: 'exclamation-trianle',
@@ -172,14 +172,14 @@ export default {
         icon: 'warning',
         buttons: true,
         dangerMode: true,
-      }).then(willDelete => {
+      }).then((willDelete) => {
         if (willDelete) {
           const headers = { headers: {} };
           const session = JSON.parse(localStorage.getItem('session'));
           headers.headers.sid = session.sid;
           headers.headers.utoken = session.utoken;
           HTTP.delete('/lists/' + list.id.toString(), headers)
-            .then(response => {
+            .then((response) => {
               // show success toast
               this.$toasted.show('List has been deleted successfully', {
                 icon: 'check-circle',

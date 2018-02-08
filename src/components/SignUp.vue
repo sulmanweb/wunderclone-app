@@ -57,7 +57,7 @@ export default {
   methods: {
     submitSignUp() {
       HTTP.post('/auth/sign_up', this.form_data)
-        .then(response => {
+        .then((response) => {
           // Show toast for success
           this.$toasted.show('You are signed up successfully', {
             icon: 'check-circle',
@@ -71,7 +71,7 @@ export default {
           // redirect to login
           this.$router.push({ name: 'Login' });
         })
-        .catch(e => {
+        .catch((e) => {
           this.errors = e.response.data.errors;
         });
     },
