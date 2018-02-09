@@ -18,6 +18,7 @@ Vue.use(Toasted, {
 Vue.use(VueSwal);
 Vue.use(VueAnalytics, {
   id: 'UA-113865633-1',
+  Router,
 });
 
 export default new Router({
