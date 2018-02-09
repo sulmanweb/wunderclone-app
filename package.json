@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "vue": "^2.5.2",
+    "vue-analytics": "^5.8.0",
     "vue-router": "^3.0.1",
     "vue-swal": "0.0.6",
     "vue-toasted": "^1.1.24"

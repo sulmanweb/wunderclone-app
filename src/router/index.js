@@ -6,6 +6,7 @@ import Home from '@/components/Home';
 import ListView from '@/components/ListView';
 import Toasted from 'vue-toasted';
 import VueSwal from 'vue-swal';
+import VueAnalytics from 'vue-analytics';
 
 Vue.use(Router);
 Vue.use(Toasted, {
@@ -15,6 +16,9 @@ Vue.use(Toasted, {
   iconPack: 'fontawesome',
 });
 Vue.use(VueSwal);
+Vue.use(VueAnalytics, {
+  id: 'UA-113865633-1',
+});
 
 export default new Router({
   mode: 'history',
